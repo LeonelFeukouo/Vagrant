@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#DEFINITION DES VARIABLE
+BOX = "debian/bullseye64" #OS DE LA VM
+BOX_VERSION = '11.20230615.1' #VERSION DE L'OS
+HYPERVISEUR = "virtualbox" #HYPERVISEUR
+RAM = 4096 #RAM
+CPU = 4 #CPU
+NAME = "LEO_CI_CD" #Nom de la VM DANS L'HYPERVISEUR
+HOSTNAME = "LEONEL"
+DISK_SIZE = "20GB" #DISQUE DUR DE LA VM
+NETWORK = "private_network" #TYPE DE RESEAU
+IP = "192.168.2.10" #ADDRESSE IP
+
+#CREATION DE LA MACHINE VIRTUELLE
+Vagrant.configure("2") do |config|
+
+  config.vm.define "leo" do |leo|
+
+    leo.vm.box = BOX
+
+    leo.vm.box_version = BOX_VERSION
+    
+    leo.vm.provider HYPERVISEUR do |v|
+      v.memory = RAM
+      v.cpus = CPU
+      v.name = NAME
+    end
+    
+    leo.vm.disk :disk, size: DISK_SIZE, primary: true
+    
+    leo.vm.hostname = HOSTNAME
+
+    leo.vm.network NETWORK, ip: IP
+  end
+end
